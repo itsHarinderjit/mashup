@@ -34,6 +34,7 @@ import re
 # st.write('Object created')
 
 def download_files(singerName,n) :
+    st.write('inside download files')
     opts = FirefoxOptions()
     opts.add_argument("--headless")
     browser = webdriver.Firefox(options=opts)
@@ -66,6 +67,7 @@ def download_files(singerName,n) :
             print('internal error')
 
 def audio_merge(n,y) :
+    st.write('inside audio merge')
     final_audio = AudioFileClip(r'audio1.mp3')
     final_audio = final_audio.cutout(0,y)
     data.write('Creating your mashup .... ')
@@ -106,9 +108,11 @@ if submit_button :
             st.write(match)
             st.error('Wrong email')
         else :
+            st.write('inside submit button')
             download_files(singername,int(numSongs))
-
+            st.write('after download_files')
             audio_merge(int(numSongs),int(time))
+            st.write('inside audio merge')
     else :
         st.error('Please enter data in all fields')
 

@@ -58,7 +58,7 @@ def download_files(singerName,n) :
             continue
         try :
             yt = YouTube(link)
-        # st.write(yt.length)  ## remove later
+            st.write(yt.length)  ## remove later
             if(yt.length >= 120 and yt.length <= 360) :
                 yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
                 n -= 1

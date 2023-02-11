@@ -49,6 +49,7 @@ def download_files(singerName,n) :
         links.append(l.get_attribute("href"))
     
     i = 0
+    st.write('middle of download files')
     # st.write('Currently downloading ...')
     for link in links :
         if n==0 :
@@ -112,7 +113,7 @@ if submit_button :
             download_files(singername,int(numSongs))
             st.write('after download_files')
             audio_merge(int(numSongs),int(time))
-            st.write('inside audio merge')
+            st.write('after audio merge')
     else :
         st.error('Please enter data in all fields')
 

@@ -45,6 +45,7 @@ def download_files(singerName,n) :
 
     browser.get('https://www.youtube.com/results?search_query='+singerName)
 
+    data.write('Fetching songs....')
     time.sleep(10)
 
     listings=browser.find_elements('xpath','//a[@id="thumbnail"]')

@@ -14,6 +14,8 @@ from moviepy.editor import *
 import sys
 import os
 import re
+import shutil
+import time
 
 # opts = FirefoxOptions()
 # opts.add_argument("--headless")
@@ -42,6 +44,8 @@ def download_files(singerName,n) :
     print('opening browser')
 
     browser.get('https://www.youtube.com/results?search_query='+singerName)
+
+    time.sleep(10)
 
     listings=browser.find_elements('xpath','//a[@id="thumbnail"]')
     links = []
@@ -84,6 +88,9 @@ def audio_merge(n,y) :
     for i in range(n) :
         os.remove('audio'+str(i)+'.mp3')
     data.empty()
+
+    archive = shutil.make_archive('send.mp3','zip','output.mp3')
+
     st.info('process completed')
 
 st.title('Mashup')

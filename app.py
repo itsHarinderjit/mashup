@@ -50,8 +50,10 @@ def download_files(singerName,n) :
     
     i = 0
     st.write('middle of download files')
+    st.write(links)
     # st.write('Currently downloading ...')
     for link in links :
+        st.write(i)
         if n==0 :
             break
         if link == None :

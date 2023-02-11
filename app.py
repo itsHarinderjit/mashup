@@ -102,7 +102,7 @@ with st.form('input') :
 
     numSongs = st.text_input('Enter number of songs')
 
-    time = st.text_input('Enter time')
+    y = st.text_input('Enter time')
 
     email = st.text_input('Enter your email')
 
@@ -111,7 +111,7 @@ with st.form('input') :
 data = st.empty()
 
 if submit_button :
-    if singername != '' and numSongs != '' and time != '' and email != '' :
+    if singername != '' and numSongs != '' and y != '' and email != '' :
         regex = '[A-Za-z0-9_]*@[A-Za-z]*\.[A-Za-z]*'
         match = re.findall(regex,email)
         if match[0] != email :
@@ -121,7 +121,7 @@ if submit_button :
             st.write('inside submit button')
             download_files(singername,int(numSongs))
             st.write('after download_files')
-            audio_merge(int(numSongs),int(time))
+            audio_merge(int(numSongs),int(y))
             st.write('after audio merge')
     else :
         st.error('Please enter data in all fields')

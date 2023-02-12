@@ -47,7 +47,7 @@ def download_files(singerName,n) :
     # st.write('middle of download files')
     # st.write(links)
     st.write(len(links))  ## remove later
-    st.write('Currently downloading ...')
+    # st.write('Currently downloading ...')
     for link in links :
         st.write(i)
         if n==0 :

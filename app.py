@@ -28,7 +28,7 @@ def download_files(singerName,n) :
 
     data.write('Fetching your songs....')
     time.sleep(15)
-    browser.execute_script("window.scrollTo(0, 12080)")
+    browser.execute_script("window.scrollTo(0, 8080)")
     time.sleep(15)
 
     listings=browser.find_elements('xpath','//a[@id="thumbnail"]')

@@ -17,7 +17,8 @@ import re
 import time
 
 def download_files(singerName,n) :
-    st.write('inside download files')
+    check = n
+    # st.write('inside download files')
     opts = FirefoxOptions()
     opts.add_argument("--headless")
     browser = webdriver.Firefox(options=opts)
@@ -28,8 +29,14 @@ def download_files(singerName,n) :
 
     data.write('Fetching your songs....')
     time.sleep(15)
-    browser.execute_script("window.scrollTo(0, 4080)")
-    time.sleep(15)
+    check -= 20
+    scroll = 0
+    while check > 0 :
+        browser.execute_script('window.scrollTo({}, {})'.format(8080*scroll,8080*(scroll+1)))
+        st.write('scrolling')
+        time.sleep(15)
+        check -= 20
+        scroll += 1
 
     listings=browser.find_elements('xpath','//a[@id="thumbnail"]')
     links = []
@@ -38,28 +45,28 @@ def download_files(singerName,n) :
     
     i = 0
     # st.write('middle of download files')
-    st.write(links)
-    st.write(len(links))
-    # st.write('Currently downloading ...')
-    # for link in links :
-    #     st.write(i)
-    #     if n==0 :
-    #         break
-    #     if link == None :
-    #         continue
-    #     try :
-    #         yt = YouTube(link)
-    #         st.write(yt.length)  ## remove later
-    #         if(yt.length >= 120 and yt.length <= 360) :
-    #             yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
-    #             n -= 1
-    #             i += 1
-    #             data.write('Currently downloading.... ' + yt.title)
-    #     except :
-    #         print('internal error')
+    # st.write(links)
+    st.write(len(links))  ## remove later
+    st.write('Currently downloading ...')
+    for link in links :
+        st.write(i)
+        if n==0 :
+            break
+        if link == None :
+            continue
+        try :
+            yt = YouTube(link)
+            st.write(yt.length)  ## remove later
+            if(yt.length >= 120 and yt.length <= 360) :
+                yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
+                n -= 1
+                i += 1
+                data.write('Currently downloading.... ' + yt.title)
+        except :
+            print('internal error')
 
 def audio_merge(n,y) :
-    st.write('inside audio merge')
+    # st.write('inside audio merge')
     final_audio = AudioFileClip(r'audio0.mp3')
     final_audio = final_audio.cutout(0,y)
     data.write('Creating your mashup .... ')
@@ -68,7 +75,7 @@ def audio_merge(n,y) :
         audiofile = audiofile.cutout(0,y)
         final_audio = concatenate_audioclips([final_audio,audiofile])
 
-    final_audio.write_audiofile('output'+'.mp3')
+    final_audio.write_audiofile('output.mp3')
 
     for i in range(n) :
         os.remove('audio'+str(i)+'.mp3')
@@ -100,14 +107,14 @@ if submit_button :
         regex = '[A-Za-z0-9_]*@[A-Za-z]*\.[A-Za-z]*'
         match = re.findall(regex,email)
         if match[0] != email :
-            st.write(match)
+            # st.write(match)
             st.error('Wrong email')
         else :
-            st.write('inside submit button')
+            # st.write('inside submit button')
             download_files(singername,int(numSongs))
-            st.write('after download_files')
-            # audio_merge(int(numSongs),int(y))
-            st.write('after audio merge')
+            # st.write('after download_files')
+            audio_merge(int(numSongs),int(y))
+            # st.write('after audio merge')
     else :
         st.error('Please enter data in all fields')
 

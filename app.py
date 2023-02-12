@@ -14,26 +14,7 @@ from moviepy.editor import *
 import sys
 import os
 import re
-import shutil
 import time
-
-# opts = FirefoxOptions()
-# opts.add_argument("--headless")
-# browser = webdriver.Firefox(options=opts)
-
-# browser.get('https://www.youtube.com/results?search_query=')
-
-# listings=browser.find_elements('xpath','//a[@id="thumbnail"]')
-# links = []
-# for l in listings:
-#     links.append(l.get_attribute("href"))
-# st.write('Links aquired')
-# st.write(len(links))
-# link = links[2]
-# st.write(link)
-
-# yt = YouTube(link)
-# st.write('Object created')
 
 def download_files(singerName,n) :
     st.write('inside download files')
@@ -45,8 +26,8 @@ def download_files(singerName,n) :
 
     browser.get('https://www.youtube.com/results?search_query='+singerName)
 
-    data.write('Fetching songs....')
-    time.sleep(10)
+    data.write('Fetching your songs....')
+    # time.sleep(60)
 
     listings=browser.find_elements('xpath','//a[@id="thumbnail"]')
     links = []
@@ -54,29 +35,30 @@ def download_files(singerName,n) :
         links.append(l.get_attribute("href"))
     
     i = 0
-    st.write('middle of download files')
+    # st.write('middle of download files')
     st.write(links)
+    st.write(len(links))
     # st.write('Currently downloading ...')
-    for link in links :
-        st.write(i)
-        if n==0 :
-            break
-        if link == None :
-            continue
-        try :
-            yt = YouTube(link)
-            st.write(yt.length)  ## remove later
-            if(yt.length >= 120 and yt.length <= 360) :
-                yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
-                n -= 1
-                i += 1
-                data.write('Currently downloading.... ' + yt.title)
-        except :
-            print('internal error')
+    # for link in links :
+    #     st.write(i)
+    #     if n==0 :
+    #         break
+    #     if link == None :
+    #         continue
+    #     try :
+    #         yt = YouTube(link)
+    #         st.write(yt.length)  ## remove later
+    #         if(yt.length >= 120 and yt.length <= 360) :
+    #             yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
+    #             n -= 1
+    #             i += 1
+    #             data.write('Currently downloading.... ' + yt.title)
+    #     except :
+    #         print('internal error')
 
 def audio_merge(n,y) :
     st.write('inside audio merge')
-    final_audio = AudioFileClip(r'audio1.mp3')
+    final_audio = AudioFileClip(r'audio0.mp3')
     final_audio = final_audio.cutout(0,y)
     data.write('Creating your mashup .... ')
     for i in range(1,n) :
@@ -122,7 +104,7 @@ if submit_button :
             st.write('inside submit button')
             download_files(singername,int(numSongs))
             st.write('after download_files')
-            audio_merge(int(numSongs),int(y))
+            # audio_merge(int(numSongs),int(y))
             st.write('after audio merge')
     else :
         st.error('Please enter data in all fields')

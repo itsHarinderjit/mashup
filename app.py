@@ -158,7 +158,7 @@ if submit_button :
         numSongs = numSongs.split()[0]
         y = y.split()[0]
         email = email.split()[0]
-        regex = '[A-Za-z0-9_]*@[A-Za-z]*\.[A-Za-z]*'
+        regex = '[A-Za-z0-9_.]*@[A-Za-z]*\.[A-Za-z]*'
         match = re.findall(regex,email)
         if match[0] != email :
             st.error('Wrong email')

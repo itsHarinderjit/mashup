@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import os
 from pytube import YouTube
 
@@ -114,7 +115,27 @@ def send_email(mailid) :
     data.empty()
     st.info('process completed')
 
-st.title('Mashup')
+components.html(
+    """
+    <style>
+        * {
+            margin : 0px;
+        }
+        div {
+            color : white;
+            font-size : 8em;
+            text-align : center;
+            font-family: Arial, Helvetica, sans-serif;
+            # font-weight : bold;
+        }
+    </style>
+    <div>
+        Mashup
+    </div>
+    """,
+    height=150,
+    width=600
+)
 
 st.write('Enter name of your favourite singer, number of songs, amount of song to trim and you will reveive a mashup through your email')
 

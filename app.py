@@ -56,7 +56,8 @@ def download_files(singerName,n) :
             continue
         try :
             yt = YouTube(link)
-            if(yt.length >= 120 and yt.length <= 360) :
+            mini = max(120,y)
+            if(yt.length >= mini and yt.length <= 360) :
                 yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
                 n -= 1
                 i += 1
@@ -115,27 +116,29 @@ def send_email(mailid) :
     data.empty()
     st.info('process completed')
 
-components.html(
-    """
-    <style>
-        * {
-            margin : 0px;
-        }
-        div {
-            color : white;
-            font-size : 8em;
-            text-align : center;
-            font-family: Arial, Helvetica, sans-serif;
-            # font-weight : bold;
-        }
-    </style>
-    <div>
-        Mashup
-    </div>
-    """,
-    height=150,
-    width=600
-)
+# components.html(
+#     """
+#     <style>
+#         * {
+#             margin : 0px;
+#         }
+#         div {
+#             color : white;
+#             font-size : 8em;
+#             text-align : center;
+#             font-family: Arial, Helvetica, sans-serif;
+#             # font-weight : bold;
+#         }
+#     </style>
+#     <div>
+#         Mashup
+#     </div>
+#     """,
+#     height=150,
+#     width=600
+# )
+
+st.title('Mashup')
 
 st.write('Enter name of your favourite singer, number of songs, amount of song to trim and you will reveive a mashup through your email')
 

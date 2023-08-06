@@ -29,8 +29,6 @@ def download_files(singerName,n,y) :
     opts.add_argument("--headless")
     browser = webdriver.Firefox(options=opts)
 
-    print('opening browser')
-
     browser.get('https://www.youtube.com/results?search_query='+singerName+'+songs')
 
     data.write('Fetching your songs....')
@@ -48,21 +46,12 @@ def download_files(singerName,n,y) :
     for l in listings:
         links.append(l.get_attribute("href"))
     
-    print(links)
-    
     i = 0
     for link in links :
         if n==0 :
             break
         if link == None :
             continue
-        # yt = YouTube(link)
-        # mini = max(120,y)
-        # if(yt.length >= mini and yt.length <= 360) :
-        #     yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
-        #     n -= 1
-        #     i += 1
-        #     data.write('Currently downloading.... ' + yt.title)
         try :
             yt = YouTube(link)
             mini = max(120,y)
@@ -73,9 +62,6 @@ def download_files(singerName,n,y) :
                 data.write('Currently downloading.... ' + yt.title)
         except :
             print('internal error',link)
-        # print(link)
-        # yt = YouTube(link)
-        # yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
 
 def audio_merge(n,y) :
     data.write('Creating your mashup....')
@@ -126,7 +112,9 @@ def send_email(mailid) :
     s.quit()
 
     data.empty()
-    st.info('process completed')
+    st.info('Email sent')
+    data.write('Zipped file is sent through email please upzip it using winrar only')
+    
 
 # components.html(
 #     """
@@ -183,7 +171,6 @@ if submit_button :
                 audio_merge(int(numSongs),int(y))
             except :
                 st.error('Wrong data in number of songs or length of each song')
-            # download_files(singername,int(numSongs),int(y))
             send_email(email)
     else :
         st.error('Please enter data in all fields')

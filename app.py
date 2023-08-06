@@ -23,7 +23,7 @@ from email import encoders
 from zipfile import ZipFile
 from zipfile import ZIP_BZIP2
 
-def download_files(singerName,n) :
+def download_files(singerName,n,y) :
     check = n
     opts = FirefoxOptions()
     opts.add_argument("--headless")
@@ -31,7 +31,7 @@ def download_files(singerName,n) :
 
     print('opening browser')
 
-    browser.get('https://www.youtube.com/results?search_query='+singerName)
+    browser.get('https://www.youtube.com/results?search_query='+singerName+'+songs')
 
     data.write('Fetching your songs....')
     time.sleep(15)
@@ -48,12 +48,21 @@ def download_files(singerName,n) :
     for l in listings:
         links.append(l.get_attribute("href"))
     
+    print(links)
+    
     i = 0
     for link in links :
         if n==0 :
             break
         if link == None :
             continue
+        # yt = YouTube(link)
+        # mini = max(120,y)
+        # if(yt.length >= mini and yt.length <= 360) :
+        #     yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
+        #     n -= 1
+        #     i += 1
+        #     data.write('Currently downloading.... ' + yt.title)
         try :
             yt = YouTube(link)
             mini = max(120,y)
@@ -63,7 +72,10 @@ def download_files(singerName,n) :
                 i += 1
                 data.write('Currently downloading.... ' + yt.title)
         except :
-            print('internal error')
+            print('internal error',link)
+        # print(link)
+        # yt = YouTube(link)
+        # yt.streams.get_audio_only().download(filename='audio'+str(i)+'.mp3')
 
 def audio_merge(n,y) :
     data.write('Creating your mashup....')
@@ -85,7 +97,7 @@ def audio_merge(n,y) :
     with ZipFile(f'zipfile.zip','w',compression= ZIP_BZIP2 , allowZip64=True, compresslevel=9) as zip:
         zip.write('output.mp3')
 
-    os.remove('output.mp3')
+    # os.remove('output.mp3')
     data.empty()
 
 def send_email(mailid) :
@@ -167,10 +179,11 @@ if submit_button :
             st.error('Wrong email')
         else :
             try :
-                download_files(singername,int(numSongs))
+                download_files(singername,int(numSongs),int(y))
                 audio_merge(int(numSongs),int(y))
             except :
                 st.error('Wrong data in number of songs or length of each song')
+            # download_files(singername,int(numSongs),int(y))
             send_email(email)
     else :
         st.error('Please enter data in all fields')
